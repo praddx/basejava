@@ -14,7 +14,9 @@ public class ArrayStorage {
 
     //method clears database
     public void clear() {
-        storage = new Resume[storage.length];
+        for (int i = 0; i < size; i++) {
+            storage[i] = null;
+        }
         size = 0;
     }
 
@@ -27,7 +29,7 @@ public class ArrayStorage {
         }
 
         //checking that this resume haven't been saved in the database already
-        if (findResume(r.getUuid()) >= 0) {
+        if (findResumeIndex(r.getUuid()) >= 0) {
             System.out.println("This resume already saved in the database!");
             //saving new resume
         } else {
@@ -39,7 +41,7 @@ public class ArrayStorage {
     //method updates existing resume
     public void update(Resume r) {
         //checking that resume with given uuid exists in the database
-        int index = findResume(r.getUuid());
+        int index = findResumeIndex(r.getUuid());
         if (index >= 0) {
             storage[index] = r;
         } else {
@@ -49,7 +51,7 @@ public class ArrayStorage {
 
     //method returns resume with the given uuid from the database
     public Resume get(String uuid) {
-        int index = findResume(uuid);
+        int index = findResumeIndex(uuid);
 
         if (index >= 0) {
             return storage[index];
@@ -61,7 +63,7 @@ public class ArrayStorage {
     //method deletes resume with the given uuid from the database
     public void delete(String uuid) {
 
-        int index = findResume(uuid);
+        int index = findResumeIndex(uuid);
         if (index >= 0) {
             storage[index] = storage[size - 1];
             storage[size - 1] = null;
@@ -85,7 +87,7 @@ public class ArrayStorage {
 
     //method finds resume with the given uuid in the database and returns its index
     //if there is no resume with the given uuid in the database returns -1
-    private int findResume(String uuid) {
+    private int findResumeIndex(String uuid) {
         for (int i = 0; i < size; i++) {
             if (storage[i].getUuid().equals(uuid)) {
                 return i;
