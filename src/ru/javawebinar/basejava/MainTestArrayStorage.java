@@ -1,10 +1,10 @@
-package com.urise.webapp;
+package ru.javawebinar.basejava;
 
-import com.urise.webapp.model.Resume;
-import com.urise.webapp.storage.ArrayStorage;
+import ru.javawebinar.basejava.model.Resume;
+import ru.javawebinar.basejava.storage.ArrayStorage;
 
 /**
- * Test for com.urise.webapp.storage.com.urise.webapp.storage.ArrayStorage
+ * Test for com.javawebinar.basejava.storage.ArrayStorage
  */
 public class MainTestArrayStorage {
     static final ArrayStorage ARRAY_STORAGE = new ArrayStorage();
@@ -16,12 +16,22 @@ public class MainTestArrayStorage {
         r2.setUuid("uuid2");
         Resume r3 = new Resume();
         r3.setUuid("uuid3");
-        Resume r3Updated = new Resume();
-        r3Updated.setUuid("uuid3_updated");
+        Resume r7 = new Resume();
+        r7.setUuid("uuid7");
+        Resume r8 = new Resume();
+        r8.setUuid("uuid8");
+        Resume r5 = new Resume();
+        r5.setUuid("uuid5");
+        Resume r5New = new Resume();
+        r5New.setUuid("uuid5");
 
         ARRAY_STORAGE.save(r1);
         ARRAY_STORAGE.save(r2);
         ARRAY_STORAGE.save(r3);
+        ARRAY_STORAGE.save(r3);
+        ARRAY_STORAGE.save(r8);
+        ARRAY_STORAGE.save(r7);
+        ARRAY_STORAGE.save(r5);
 
         System.out.println("Get r1: " + ARRAY_STORAGE.get(r1.getUuid()));
         System.out.println("Size: " + ARRAY_STORAGE.size());
@@ -29,8 +39,15 @@ public class MainTestArrayStorage {
         System.out.println("Get dummy: " + ARRAY_STORAGE.get("dummy"));
 
         printAll();
-        ARRAY_STORAGE.delete(r1.getUuid());
+
+        ARRAY_STORAGE.delete(r3.getUuid());
         printAll();
+        System.out.println("Size: " + ARRAY_STORAGE.size());
+
+        System.out.println();
+        ARRAY_STORAGE.update(r5New);
+
+
         ARRAY_STORAGE.clear();
         printAll();
 
