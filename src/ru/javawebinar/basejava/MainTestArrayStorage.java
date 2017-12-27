@@ -10,19 +10,19 @@ public class MainTestArrayStorage {
     static final ArrayStorage ARRAY_STORAGE = new ArrayStorage();
 
     public static void main(String[] args) {
-        Resume r1 = new Resume();
+        Resume r1 = new Resume("uuid1");
         r1.setUuid("uuid1");
-        Resume r2 = new Resume();
+        Resume r2 = new Resume("uuid1");
         r2.setUuid("uuid2");
-        Resume r3 = new Resume();
+        Resume r3 = new Resume("uuid1");
         r3.setUuid("uuid3");
-        Resume r7 = new Resume();
+        Resume r7 = new Resume("uuid1");
         r7.setUuid("uuid7");
-        Resume r8 = new Resume();
+        Resume r8 = new Resume("uuid1");
         r8.setUuid("uuid8");
-        Resume r5 = new Resume();
+        Resume r5 = new Resume("uuid1");
         r5.setUuid("uuid5");
-        Resume r5New = new Resume();
+        Resume r5New = new Resume("uuid1");
         r5New.setUuid("uuid5");
 
         ARRAY_STORAGE.save(r1);
