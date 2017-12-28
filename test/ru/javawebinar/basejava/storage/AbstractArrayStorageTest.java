@@ -15,10 +15,15 @@ import static ru.javawebinar.basejava.storage.AbstractArrayStorage.STORAGE_LIMIT
  * Created by Pradd on 25.12.2017.
  */
 public class AbstractArrayStorageTest {
-    private Storage storage = new ArrayStorage();
+
+    private Storage storage;
     private static final String UUID_1 = "uuid1";
     private static final String UUID_2 = "uuid2";
     private static final String UUID_3 = "uuid3";
+
+    public AbstractArrayStorageTest(Storage storage) {
+        this.storage = storage;
+    }
 
     @Before
     public void setUp() throws Exception {
@@ -27,7 +32,6 @@ public class AbstractArrayStorageTest {
         storage.save(new Resume(UUID_2));
         storage.save(new Resume(UUID_3));
     }
-
 
     @Test
     public void clear() throws Exception {
@@ -71,10 +75,10 @@ public class AbstractArrayStorageTest {
 
     }
 
-    @Test (expected = NotExistStorageException.class)
+    @Test
     public void delete() throws Exception {
         storage.delete("uuid3");
-        storage.get("uuid3");
+        Assert.assertEquals(2, storage.size());
     }
 
     @Test (expected = NotExistStorageException.class)
