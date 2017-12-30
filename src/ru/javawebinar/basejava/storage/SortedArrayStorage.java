@@ -11,10 +11,6 @@ import java.util.Arrays;
  */
 public class SortedArrayStorage extends AbstractArrayStorage {
 
-
-
-    //method finds resume with the given uuid in the database and returns its index
-    //if there is no resume with the given uuid in the database returns -1
     protected int getIndex(String uuid) {
         Resume serchKey = new Resume(uuid);
         serchKey.setUuid(uuid);
@@ -30,7 +26,7 @@ public class SortedArrayStorage extends AbstractArrayStorage {
     }
 
     @Override
-    protected void deleteResume(int index) {
+    protected void deleteResume(int index, String uuid) {
         int amountElementsToMove = size - index;
         System.arraycopy(storage, index + 1, storage, index, amountElementsToMove);
     }

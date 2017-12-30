@@ -9,8 +9,6 @@ import java.util.Arrays;
  */
 public class ArrayStorage extends AbstractArrayStorage {
 
-    //method finds resume with the given uuid in the database and returns its index
-    //if there is no resume with the given uuid in the database returns -1
     protected int getIndex(String uuid) {
         for (int i = 0; i < size; i++) {
             if (storage[i].getUuid().equals(uuid)) {
@@ -26,8 +24,9 @@ public class ArrayStorage extends AbstractArrayStorage {
     }
 
     @Override
-    protected void deleteResume(int index) {
+    protected void deleteResume(int index, String uuid) {
         storage[index] = storage[size - 1];
+        storage[size - 1] = null;
     }
 }
 
