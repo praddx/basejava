@@ -11,10 +11,8 @@ public abstract class AbstractStorage implements Storage {
 
     protected Storage storage;
 
-    @Override
     public abstract void clear();
 
-    @Override
     public void save(Resume r) {
         int index = getIndex(r.getUuid());
         if (index >= 0) {
@@ -24,7 +22,6 @@ public abstract class AbstractStorage implements Storage {
         }
     }
 
-    @Override
     public void update(Resume r) {
         int index = getIndex(r.getUuid());
         if (index >= 0) {
@@ -34,16 +31,14 @@ public abstract class AbstractStorage implements Storage {
         }
     }
 
-    @Override
     public Resume get(String uuid) {
         int index = getIndex(uuid);
-        if (index == -1) {
+        if (index < 0) {
             throw new NotExistStorageException(uuid);
         }
         return getResume(index, uuid);
     }
 
-    @Override
     public void delete(String uuid) {
         int index = getIndex(uuid);
         if (index >= 0) {
@@ -53,10 +48,8 @@ public abstract class AbstractStorage implements Storage {
         }
     }
 
-    @Override
     public abstract Resume[] getAll();
 
-    @Override
     public abstract int size();
 
     protected abstract int getIndex(String uuid);

@@ -29,8 +29,10 @@ public abstract class AbstractArrayStorage extends AbstractStorage {
         size++;
     }
 
+    @Override
     public void delete(String uuid) {
         super.delete(uuid);
+        storage[size - 1] = null;
         size--;
     }
 
