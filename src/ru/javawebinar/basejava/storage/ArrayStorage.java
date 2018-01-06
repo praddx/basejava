@@ -9,23 +9,23 @@ import java.util.Arrays;
  */
 public class ArrayStorage extends AbstractArrayStorage {
 
-    protected int getIndex(String uuid) {
+    protected Object getIndex(String uuid) {
         for (int i = 0; i < size; i++) {
             if (storage[i].getUuid().equals(uuid)) {
                 return i;
             }
         }
-        return -1;
+        return null;
     }
 
     @Override
-    protected void insertResume(int index, Resume r) {
+    protected void insertResume(Object index, Resume r) {
         storage[size] = r;
     }
 
     @Override
-    protected void deleteResume(int index, String uuid) {
-        storage[index] = storage[size - 1];
+    protected void deleteResume(Object index) {
+        storage[(Integer) index] = storage[size - 1];
     }
 }
 
