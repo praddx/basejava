@@ -49,6 +49,14 @@ public abstract class AbstractArrayStorage extends AbstractStorage {
     }
 
     @Override
+    protected boolean isStorageContainsResume(Object index) {
+        if (index != null && (Integer) index >= 0) {
+            return true;
+        }
+        return false;
+    }
+
+    @Override
     protected void updateResume(Object index, Resume r) {
         storage[(Integer) index] = r;
     }

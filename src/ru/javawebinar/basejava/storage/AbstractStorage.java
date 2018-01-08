@@ -14,44 +14,50 @@ public abstract class AbstractStorage implements Storage {
     public abstract void clear();
 
     public void save(Resume r) {
-        Object index = getIndex(r.getUuid());
-        if (index == null || (index instanceof Integer && (Integer) index < 0)) {
-            insertResume(index, r);
-        } else {
-            throw new ExistStorageException(r.getUuid());
-        }
+        Object index = checkIndex(r.getUuid());
+        checkResumeExists(index, r.getUuid());
+        insertResume(index, r);
     }
 
     public void update(Resume r) {
-        Object index = getIndex(r.getUuid());
-        if (index == null || (index instanceof Integer && (Integer) index < 0)) {
-            throw new NotExistStorageException(r.getUuid());
-        } else {
-            updateResume(index, r);
-        }
+        Object index = checkIndex(r.getUuid());
+        checkResumeNotExists(index, r.getUuid());
+        updateResume(index, r);
+
     }
 
     public Resume get(String uuid) {
-        Object index = getIndex(uuid);
-        if (index == null || (index instanceof Integer && (Integer) index < 0)) {
-            throw new NotExistStorageException(uuid);
-        }
+        Object index = checkIndex(uuid);
+        checkResumeNotExists(index, uuid);
         return getResume(index);
     }
 
     public void delete(String uuid) {
-        Object index = getIndex(uuid);
-        if (index == null || (index instanceof Integer && (Integer) index < 0)) {
-            throw new NotExistStorageException(uuid);
-        }
+        Object index = checkIndex(uuid);
+        checkResumeNotExists(index, uuid);
         deleteResume(index);
     }
+
 
     public abstract Resume[] getAll();
 
     public abstract int size();
 
-    protected abstract Object getIndex(String uuid);
+    protected void checkResumeExists(Object index, String uuid) {
+        if (isStorageContainsResume(index)) {
+            throw new ExistStorageException(uuid);
+        }
+    }
+
+    protected void checkResumeNotExists(Object index, String uuid) {
+        if (!isStorageContainsResume(index)) {
+            throw new NotExistStorageException(uuid);
+        }
+    }
+
+    protected abstract Object checkIndex(String uuid);
+
+    protected abstract boolean isStorageContainsResume(Object index);
 
     protected abstract void insertResume(Object index, Resume r);
 

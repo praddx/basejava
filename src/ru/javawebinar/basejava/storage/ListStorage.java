@@ -28,13 +28,21 @@ public class ListStorage extends AbstractStorage {
     }
 
     @Override
-    protected Object getIndex(String uuid) {
+    protected Integer checkIndex(String uuid) {
         for (int i = 0; i < storage.size(); i++) {
             if (storage.get(i).getUuid().equals(uuid)) {
                 return i;
             }
         }
         return null;
+    }
+
+    @Override
+    protected boolean isStorageContainsResume(Object index) {
+        if (index != null && (Integer) index >= 0) {
+            return true;
+        }
+        return false;
     }
 
     @Override

@@ -11,7 +11,7 @@ import java.util.Arrays;
  */
 public class SortedArrayStorage extends AbstractArrayStorage {
 
-    protected Object getIndex(String uuid) {
+    protected Integer checkIndex(String uuid) {
         Resume serchKey = new Resume(uuid);
         return Arrays.binarySearch(storage, 0, size, serchKey);
     }

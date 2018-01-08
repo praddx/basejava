@@ -27,11 +27,19 @@ public class MapStorage extends AbstractStorage {
     }
 
     @Override
-    protected Object getIndex(String uuid) {
+    protected String checkIndex(String uuid) {
         if (storage.containsKey(uuid)) {
             return uuid;
         }
         return null;
+    }
+
+    @Override
+    protected boolean isStorageContainsResume(Object index) {
+        if (index != null && storage.containsKey(index)) {
+            return true;
+        }
+        return false;
     }
 
     @Override
