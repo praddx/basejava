@@ -16,13 +16,13 @@ public abstract class AbstractStorage implements Storage {
     public void save(Resume r) {
         Object index = checkIndex(r.getUuid());
         checkResumeExists(index, r.getUuid());
-        insertResume(index, r);
+        doSave(index, r);
     }
 
     public void update(Resume r) {
         Object index = checkIndex(r.getUuid());
         checkResumeNotExists(index, r.getUuid());
-        updateResume(index, r);
+        doUpdate(index, r);
 
     }
 
@@ -35,7 +35,7 @@ public abstract class AbstractStorage implements Storage {
     public void delete(String uuid) {
         Object index = checkIndex(uuid);
         checkResumeNotExists(index, uuid);
-        deleteResume(index);
+        doDelete(index);
     }
 
 
@@ -59,11 +59,11 @@ public abstract class AbstractStorage implements Storage {
 
     protected abstract boolean isStorageContainsResume(Object index);
 
-    protected abstract void insertResume(Object index, Resume r);
+    protected abstract void doSave(Object index, Resume r);
 
-    protected abstract void updateResume(Object index, Resume r);
+    protected abstract void doUpdate(Object index, Resume r);
 
-    protected abstract void deleteResume(Object index);
+    protected abstract void doDelete(Object index);
 
     protected abstract Resume getResume(Object index);
 }

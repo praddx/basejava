@@ -43,17 +43,17 @@ public class ListStorage extends AbstractStorage {
     }
 
     @Override
-    protected void insertResume(Object index, Resume r) {
+    protected void doSave(Object index, Resume r) {
         storage.add(r);
     }
 
     @Override
-    protected void deleteResume(Object index) {
+    protected void doDelete(Object index) {
         storage.remove(((Integer) index).intValue());
     }
 
     @Override
-    protected void updateResume(Object index, Resume r) {
+    protected void doUpdate(Object index, Resume r) {
         storage.set((Integer) index, r);
     }
 

@@ -17,7 +17,7 @@ public class SortedArrayStorage extends AbstractArrayStorage {
     }
 
     @Override
-    protected void insertResume(Object index, Resume r) {
+    protected void doSave(Object index, Resume r) {
         int newEntryIndex = -(Integer) index - 1;
         int amountElementsToMove = size - (newEntryIndex);
         System.arraycopy(storage, newEntryIndex, storage, newEntryIndex + 1, amountElementsToMove);
@@ -25,7 +25,7 @@ public class SortedArrayStorage extends AbstractArrayStorage {
     }
 
     @Override
-    protected void deleteResume(Object index) {
+    protected void doDelete(Object index) {
         int amountElementsToMove = size - (Integer) index;
         System.arraycopy(storage, (Integer) index + 1, storage, (Integer) index, amountElementsToMove);
     }

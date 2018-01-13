@@ -54,7 +54,7 @@ public abstract class AbstractArrayStorage extends AbstractStorage {
     }
 
     @Override
-    protected void updateResume(Object index, Resume r) {
+    protected void doUpdate(Object index, Resume r) {
         storage[(Integer) index] = r;
     }
 
