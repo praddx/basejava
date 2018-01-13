@@ -34,15 +34,12 @@ public class ListStorage extends AbstractStorage {
                 return i;
             }
         }
-        return null;
+        return -1;
     }
 
     @Override
     protected boolean isStorageContainsResume(Object index) {
-        if (index != null && (Integer) index >= 0) {
-            return true;
-        }
-        return false;
+        return (Integer) index >= 0;
     }
 
     @Override

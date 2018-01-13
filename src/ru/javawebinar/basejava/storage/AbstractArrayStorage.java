@@ -50,10 +50,7 @@ public abstract class AbstractArrayStorage extends AbstractStorage {
 
     @Override
     protected boolean isStorageContainsResume(Object index) {
-        if (index != null && (Integer) index >= 0) {
-            return true;
-        }
-        return false;
+        return (Integer) index >= 0;
     }
 
     @Override

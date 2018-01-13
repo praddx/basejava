@@ -36,10 +36,7 @@ public class MapStorage extends AbstractStorage {
 
     @Override
     protected boolean isStorageContainsResume(Object index) {
-        if (index != null && storage.containsKey(index)) {
-            return true;
-        }
-        return false;
+        return index != null && storage.containsKey(index);
     }
 
     @Override
