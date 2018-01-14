@@ -4,6 +4,8 @@ import ru.javawebinar.basejava.exception.ExistStorageException;
 import ru.javawebinar.basejava.exception.NotExistStorageException;
 import ru.javawebinar.basejava.model.Resume;
 
+import java.util.List;
+
 /**
  * Created by Pradd on 29.12.2017.
  */
@@ -14,32 +16,31 @@ public abstract class AbstractStorage implements Storage {
     public abstract void clear();
 
     public void save(Resume r) {
-        Object index = checkIndex(r.getUuid());
+        Object index = getSearchKey(r.getUuid());
         checkResumeExists(index, r.getUuid());
         doSave(index, r);
     }
 
     public void update(Resume r) {
-        Object index = checkIndex(r.getUuid());
+        Object index = getSearchKey(r.getUuid());
         checkResumeNotExists(index, r.getUuid());
         doUpdate(index, r);
 
     }
 
     public Resume get(String uuid) {
-        Object index = checkIndex(uuid);
+        Object index = getSearchKey(uuid);
         checkResumeNotExists(index, uuid);
         return getResume(index);
     }
 
     public void delete(String uuid) {
-        Object index = checkIndex(uuid);
+        Object index = getSearchKey(uuid);
         checkResumeNotExists(index, uuid);
         doDelete(index);
     }
 
-
-    public abstract Resume[] getAll();
+    public abstract List<Resume> getAllSorted();
 
     public abstract int size();
 
@@ -55,7 +56,7 @@ public abstract class AbstractStorage implements Storage {
         }
     }
 
-    protected abstract Object checkIndex(String uuid);
+    protected abstract Object getSearchKey(String uuid);
 
     protected abstract boolean isStorageContainsResume(Object index);
 

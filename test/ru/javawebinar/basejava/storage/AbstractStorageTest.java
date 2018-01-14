@@ -5,11 +5,10 @@ import org.junit.Before;
 import org.junit.Test;
 import ru.javawebinar.basejava.exception.ExistStorageException;
 import ru.javawebinar.basejava.exception.NotExistStorageException;
-import ru.javawebinar.basejava.exception.StorageException;
 import ru.javawebinar.basejava.model.Resume;
 
-import static org.junit.Assert.*;
-import static ru.javawebinar.basejava.storage.AbstractArrayStorage.STORAGE_LIMIT;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by Pradd on 01.01.2018.
@@ -21,10 +20,14 @@ public abstract class AbstractStorageTest {
     private static final String UUID_2 = "uuid2";
     private static final String UUID_3 = "uuid3";
     private static final String UUID_4 = "uuid4";
-    private static final Resume r1 = new Resume(UUID_1);
-    private static final Resume r2 = new Resume(UUID_2);
-    private static final Resume r3 = new Resume(UUID_3);
-    private static final Resume r4 = new Resume(UUID_4);
+    private static final String fullName_1 = "Bob Marley";
+    private static final String fullName_2 = "Marylin Manson";
+    private static final String fullName_3 = "Elvis Presley";
+    private static final String fullName_4 = "John Lennon";
+    private static final Resume r1 = new Resume(UUID_1, fullName_1);
+    private static final Resume r2 = new Resume(UUID_2, fullName_2);
+    private static final Resume r3 = new Resume(UUID_3, fullName_3);
+    private static final Resume r4 = new Resume(UUID_4, fullName_4);
 
     public AbstractStorageTest(Storage storage) {
         this.storage = storage;
@@ -50,7 +53,7 @@ public abstract class AbstractStorageTest {
         Assert.assertEquals(r4, storage.get(UUID_4));
     }
 
-    @Test (expected = ExistStorageException.class)
+    @Test(expected = ExistStorageException.class)
     public void saveExist() throws Exception {
         storage.save(r3);
     }
@@ -89,11 +92,23 @@ public abstract class AbstractStorageTest {
         storage.get("xxx");
     }
 
+//    @Test
+//    public void getAll() throws Exception {
+//        Resume[] allResumes = {r1, r2, r3};
+//        Resume[] resumesFromStorage = {storage.get(UUID_1), storage.get(UUID_2), storage.get(UUID_3)};
+//        Assert.assertArrayEquals(allResumes, resumesFromStorage);
+//    }
+
     @Test
-    public void getAll() throws Exception {
-        Resume[] allResumes = {r1, r2, r3};
-        Resume[] resumesFromStorage = {storage.get(UUID_1), storage.get(UUID_2), storage.get(UUID_3)};
-        Assert.assertArrayEquals(allResumes, resumesFromStorage);
+    public void getAllSorted() throws Exception {
+        List<Resume> sortedResumesList = new ArrayList();
+        sortedResumesList.add(r1);
+        sortedResumesList.add(r3);
+        sortedResumesList.add(r2);
+        List<Resume> listFromStorage = storage.getAllSorted();
+        for (int i = 0; i < sortedResumesList.size(); i++) {
+            Assert.assertEquals(sortedResumesList.get(i), listFromStorage.get(i));
+        }
     }
 
     @Test

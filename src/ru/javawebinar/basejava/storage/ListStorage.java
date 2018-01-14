@@ -3,6 +3,7 @@ package ru.javawebinar.basejava.storage;
 import ru.javawebinar.basejava.model.Resume;
 
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 
 /**
@@ -18,9 +19,15 @@ public class ListStorage extends AbstractStorage {
     }
 
     @Override
-    public Resume[] getAll() {
-        return storage.toArray(new Resume[storage.size()]);
+    public List<Resume> getAllSorted() {
+        storage.sort(Comparator.comparing(Resume::getFullName));
+        return storage;
     }
+
+//    @Override
+//    public Resume[] getAll() {
+//        return storage.toArray(new Resume[storage.size()]);
+//    }
 
     @Override
     public int size() {
@@ -28,18 +35,18 @@ public class ListStorage extends AbstractStorage {
     }
 
     @Override
-    protected Integer checkIndex(String uuid) {
+    protected Integer getSearchKey(String uuid) {
         for (int i = 0; i < storage.size(); i++) {
             if (storage.get(i).getUuid().equals(uuid)) {
                 return i;
             }
         }
-        return -1;
+        return null;
     }
 
     @Override
     protected boolean isStorageContainsResume(Object index) {
-        return (Integer) index >= 0;
+        return index != null;
     }
 
     @Override
