@@ -24,10 +24,10 @@ public class ListStorage extends AbstractStorage {
         return storage;
     }
 
-//    @Override
-//    public Resume[] getAll() {
-//        return storage.toArray(new Resume[storage.size()]);
-//    }
+    @Override
+    public List<Resume> getList() {
+        return storage;
+    }
 
     @Override
     public int size() {

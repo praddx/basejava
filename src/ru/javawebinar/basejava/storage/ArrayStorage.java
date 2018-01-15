@@ -20,11 +20,7 @@ public class ArrayStorage extends AbstractArrayStorage {
         return -1;
     }
 
-    @Override
-    public List<Resume> getAllSorted() {
-        Arrays.sort(storage, 0, size, Comparator.comparing(Resume::getFullName));
-        return Arrays.asList(storage).subList(0, size);
-    }
+
 
     @Override
     protected void doSave(Object index, Resume r) {
