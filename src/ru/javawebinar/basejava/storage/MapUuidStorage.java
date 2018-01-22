@@ -9,14 +9,14 @@ import java.util.*;
  */
 public class MapUuidStorage extends AbstractStorage {
 
-    Map<String, Resume> storage = new HashMap<>();
+    private Map<String, Resume> storage = new HashMap<>();
 
     public void clear() {
         storage.clear();
     }
 
     @Override
-    public List<Resume> getList() {
+    public List<Resume> doCopyAll() {
         return new ArrayList<>(storage.values());
     }
 
@@ -32,7 +32,7 @@ public class MapUuidStorage extends AbstractStorage {
 
     @Override
     protected boolean isStorageContainsResume(Object index) {
-        return (index != null && storage.containsKey(index));
+        return (storage.containsKey((String) index));
     }
 
     @Override
@@ -42,7 +42,7 @@ public class MapUuidStorage extends AbstractStorage {
 
     @Override
     protected void doUpdate(Object index, Resume r) {
-        storage.replace((String) index, r);
+        storage.put((String) index, r);
     }
 
     @Override

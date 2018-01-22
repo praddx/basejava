@@ -8,7 +8,10 @@ import ru.javawebinar.basejava.exception.NotExistStorageException;
 import ru.javawebinar.basejava.model.Resume;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
+
+import static org.junit.Assert.assertEquals;
 
 /**
  * Created by Pradd on 01.01.2018.
@@ -44,13 +47,13 @@ public abstract class AbstractStorageTest {
     @Test
     public void clear() throws Exception {
         storage.clear();
-        Assert.assertEquals(0, storage.size());
+        assertEquals(0, storage.size());
     }
 
     @Test
     public void save() throws Exception {
         storage.save(r4);
-        Assert.assertEquals(r4, storage.get(UUID_4));
+        assertEquals(r4, storage.get(UUID_4));
     }
 
     @Test(expected = ExistStorageException.class)
@@ -74,7 +77,7 @@ public abstract class AbstractStorageTest {
     @Test
     public void delete() throws Exception {
         storage.delete(UUID_3);
-        Assert.assertEquals(2, storage.size());
+        assertEquals(2, storage.size());
     }
 
     @Test(expected = NotExistStorageException.class)
@@ -84,7 +87,7 @@ public abstract class AbstractStorageTest {
 
     @Test
     public void get() throws Exception {
-        Assert.assertEquals(r1, storage.get(UUID_1));
+        assertEquals(r1, storage.get(UUID_1));
     }
 
     @Test(expected = NotExistStorageException.class)
@@ -101,19 +104,13 @@ public abstract class AbstractStorageTest {
 
     @Test
     public void getAllSorted() throws Exception {
-        List<Resume> sortedResumesList = new ArrayList();
-        sortedResumesList.add(r1);
-        sortedResumesList.add(r3);
-        sortedResumesList.add(r2);
-        List<Resume> listFromStorage = storage.getAllSorted();
-        for (int i = 0; i < sortedResumesList.size(); i++) {
-            Assert.assertEquals(sortedResumesList.get(i), listFromStorage.get(i));
-        }
+        List<Resume> list = storage.getAllSorted();
+        assertEquals(list, Arrays.asList(r1, r3, r2));
     }
 
     @Test
     public void size() throws Exception {
-        Assert.assertEquals(3, storage.size());
+        assertEquals(3, storage.size());
     }
 
 }

@@ -13,7 +13,7 @@ public class MapStorage extends AbstractStorage {
     }
 
     @Override
-    public List<Resume> getList() {
+    public List<Resume> doCopyAll() {
         return new ArrayList<>(storage.values());
     }
 
@@ -39,7 +39,7 @@ public class MapStorage extends AbstractStorage {
 
     @Override
     protected void doUpdate(Object resume, Resume r) {
-        storage.replace(r.getUuid(), r);
+        storage.put(r.getUuid(), r);
     }
 
     @Override
@@ -49,6 +49,6 @@ public class MapStorage extends AbstractStorage {
 
     @Override
     protected Resume getResume(Object resume) {
-        return storage.get(((Resume) resume).getUuid());
+        return (Resume) resume;
     }
 }

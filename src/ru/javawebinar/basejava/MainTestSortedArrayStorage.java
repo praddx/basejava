@@ -10,20 +10,14 @@ public class MainTestSortedArrayStorage {
     static final SortedArrayStorage SORTED_ARRAY_STORAGE = new SortedArrayStorage();
 
     public static void main(String[] args) {
-        Resume r1 = new Resume("uuid1");
-        r1.setUuid("uuid1");
-        Resume r2 = new Resume("uuid2");
-        r2.setUuid("uuid2");
-        Resume r3 = new Resume("uuid3");
-        r3.setUuid("uuid3");
-        Resume r7 = new Resume("uuid7");
-        r7.setUuid("uuid7");
-        Resume r8 = new Resume("uuid8");
-        r8.setUuid("uuid8");
-        Resume r5 = new Resume("uuid5");
-        r5.setUuid("uuid5");
-        Resume r5New = new Resume("uuid5");
-        r5New.setUuid("uuid5");
+        Resume r1 = new Resume("uuid1","uuid1");
+        Resume r2 = new Resume("uuid2","uuid2");
+        Resume r3 = new Resume("uuid3", "uuid3");
+        Resume r7 = new Resume("uuid7", "uuid7");
+        Resume r8 = new Resume("uuid8", "uuid8");
+        Resume r5 = new Resume("uuid5", "uuid5");
+        Resume r5New = new Resume("uuid5", "uuid5");
+
 
         SORTED_ARRAY_STORAGE.save(r1);
         SORTED_ARRAY_STORAGE.save(r2);
