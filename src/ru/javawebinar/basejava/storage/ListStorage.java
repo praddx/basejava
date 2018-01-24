@@ -10,7 +10,7 @@ import java.util.List;
 /**
  * Created by Pradd on 29.12.2017.
  */
-public class ListStorage extends AbstractStorage {
+public class ListStorage extends AbstractStorage<Integer> {
 
     protected List<Resume> storage = new ArrayList<>();
 
@@ -40,27 +40,27 @@ public class ListStorage extends AbstractStorage {
     }
 
     @Override
-    protected boolean isStorageContainsResume(Object index) {
+    protected boolean isExist(Integer index) {
         return index != null;
     }
 
     @Override
-    protected void doSave(Object index, Resume r) {
+    protected void doSave(Integer index, Resume r) {
         storage.add(r);
     }
 
     @Override
-    protected void doDelete(Object index) {
-        storage.remove(((Integer) index).intValue());
+    protected void doDelete(Integer index) {
+        storage.remove(index.intValue());
     }
 
     @Override
-    protected void doUpdate(Object index, Resume r) {
-        storage.set((Integer) index, r);
+    protected void doUpdate(Integer index, Resume r) {
+        storage.set(index, r);
     }
 
     @Override
-    protected Resume getResume(Object index) {
-        return storage.get((Integer) index);
+    protected Resume doGet(Integer index) {
+        return storage.get(index);
     }
 }

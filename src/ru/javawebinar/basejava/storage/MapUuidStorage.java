@@ -7,7 +7,7 @@ import java.util.*;
 /**
  * Created by Pradd on 29.12.2017.
  */
-public class MapUuidStorage extends AbstractStorage {
+public class MapUuidStorage extends AbstractStorage<String> {
 
     private Map<String, Resume> storage = new HashMap<>();
 
@@ -31,27 +31,27 @@ public class MapUuidStorage extends AbstractStorage {
     }
 
     @Override
-    protected boolean isStorageContainsResume(Object index) {
-        return (storage.containsKey((String) index));
+    protected boolean isExist(String serchKey) {
+        return (storage.containsKey((String) serchKey));
     }
 
     @Override
-    protected void doSave(Object index, Resume r) {
-        storage.put((String) index, r);
+    protected void doSave(String serchKey, Resume r) {
+        storage.put((String) serchKey, r);
     }
 
     @Override
-    protected void doUpdate(Object index, Resume r) {
-        storage.put((String) index, r);
+    protected void doUpdate(String serchKey, Resume r) {
+        storage.put((String) serchKey, r);
     }
 
     @Override
-    protected void doDelete(Object index) {
-        storage.remove(index);
+    protected void doDelete(String serchKey) {
+        storage.remove(serchKey);
     }
 
     @Override
-    protected Resume getResume(Object index) {
-        return storage.get(index);
+    protected Resume doGet(String serchKey) {
+        return storage.get(serchKey);
     }
 }
