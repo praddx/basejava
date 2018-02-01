@@ -12,12 +12,7 @@ public class TextSection extends Section {
         this.text = text;
     }
 
-    public TextSection(SectionType sectionType) {
-        super(sectionType);
-    }
-
-    public TextSection(SectionType sectionType, String text) {
-        super(sectionType);
+    public TextSection(String text) {
         this.text = text;
     }
 

@@ -22,12 +22,7 @@ public class ListSection extends Section {
         this.descriptionList.remove(description);
     }
 
-    public ListSection(SectionType sectionType) {
-        super(sectionType);
-    }
-
-    public ListSection(SectionType sectionType, List<String> listElements) {
-        super(sectionType);
+    public ListSection(List<String> listElements) {
         this.descriptionList = listElements;
     }
 

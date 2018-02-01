@@ -1,18 +1,21 @@
 package ru.javawebinar.basejava.model;
 
+import java.time.LocalDate;
 import java.util.Objects;
 
 public class Company {
 
     private String companyName;
     private String position;
-    private String dates;
     private String description;
+    LocalDate startDate;
+    LocalDate endDate;
 
-    public Company(String companyName, String position, String dates, String description) {
+    public Company(String companyName, String position, LocalDate startDate, LocalDate endDate, String description) {
         this.companyName = companyName;
         this.position = position;
-        this.dates = dates;
+        this.startDate = startDate;
+        this.endDate = endDate;
         this.description = description;
     }
 
@@ -32,12 +35,20 @@ public class Company {
         this.position = position;
     }
 
-    public String getDates() {
-        return dates;
+    public LocalDate getStartDate() {
+        return startDate;
     }
 
-    public void setDates(String dates) {
-        this.dates = dates;
+    public void setStartDate(LocalDate startDate) {
+        this.startDate = startDate;
+    }
+
+    public LocalDate getEndDate() {
+        return endDate;
+    }
+
+    public void setEndDate(LocalDate endDate) {
+        this.endDate = endDate;
     }
 
     public String getDescription() {
@@ -55,23 +66,22 @@ public class Company {
         Company company = (Company) o;
         return Objects.equals(companyName, company.companyName) &&
                 Objects.equals(position, company.position) &&
-                Objects.equals(dates, company.dates) &&
-                Objects.equals(description, company.description);
+                Objects.equals(description, company.description) &&
+                Objects.equals(startDate, company.startDate) &&
+                Objects.equals(endDate, company.endDate);
     }
 
     @Override
     public int hashCode() {
 
-        return Objects.hash(companyName, position, dates, description);
+        return Objects.hash(companyName, position, description, startDate, endDate);
     }
 
     @Override
     public String toString() {
-        return "Company{" +
-                "companyName='" + companyName + '\'' +
+        return "companyName='" + companyName + '\'' +
                 ", position='" + position + '\'' +
-                ", dates='" + dates + '\'' +
-                ", description='" + description + '\'' +
-                '}';
+                ", dates=\'" + startDate.toString() + " - " + endDate.toString() + '\'' +
+                ", description='" + description + '\'';
     }
 }

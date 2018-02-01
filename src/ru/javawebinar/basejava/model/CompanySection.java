@@ -2,7 +2,7 @@ package ru.javawebinar.basejava.model;
 
 import java.util.List;
 
-public class CompanySection extends Section{
+public class CompanySection extends Section {
 
     private List<Company> companiesList;
 
@@ -22,13 +22,8 @@ public class CompanySection extends Section{
         this.companiesList.remove(company);
     }
 
-    public CompanySection(SectionType sectionType, List<Company> companiesList) {
-        super(sectionType);
+    public CompanySection(List<Company> companiesList) {
         this.companiesList = companiesList;
-    }
-
-    public CompanySection(SectionType sectionType) {
-        super(sectionType);
     }
 
     @Override
@@ -37,6 +32,6 @@ public class CompanySection extends Section{
         companiesList.forEach(company -> {
             builder.append(company.toString() + "\n");
         });
-        return "Companies Section" + builder.toString();
+        return "Experience: \n" + builder.toString();
     }
 }

@@ -1,9 +1,6 @@
 package ru.javawebinar.basejava.model;
 
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Objects;
-import java.util.UUID;
+import java.util.*;
 
 /**
  * com.javawebinar.basejava.model.Resume class
@@ -15,9 +12,9 @@ public class Resume implements Comparable<Resume> {
 
     private final String fullName;
 
-    private Map<ContactType, Contact> contacts = new HashMap<>();
+    private Map<ContactType, String> contacts = new EnumMap<>(ContactType.class);
 
-    private Map<SectionType, Section> informationSections = new HashMap<>();
+    private Map<SectionType, Section> informationSections = new EnumMap<>(SectionType.class);
 
     public Resume(String fullName) {
         this(UUID.randomUUID().toString(), fullName);
@@ -38,7 +35,7 @@ public class Resume implements Comparable<Resume> {
         return fullName;
     }
 
-    public Map<ContactType, Contact> getContacts() {
+    public Map<ContactType, String> getContacts() {
         return contacts;
     }
 
@@ -67,7 +64,6 @@ public class Resume implements Comparable<Resume> {
 
     @Override
     public String toString() {
-
         return uuid + '(' + fullName + ')';
     }
 
