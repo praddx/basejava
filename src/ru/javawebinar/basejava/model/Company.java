@@ -8,8 +8,8 @@ public class Company {
     private String companyName;
     private String position;
     private String description;
-    LocalDate startDate;
-    LocalDate endDate;
+    private LocalDate startDate;
+    private LocalDate endDate;
 
     public Company(String companyName, String position, LocalDate startDate, LocalDate endDate, String description) {
         this.companyName = companyName;

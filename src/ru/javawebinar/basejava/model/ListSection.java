@@ -22,10 +22,6 @@ public class ListSection extends Section {
         this.descriptionList.remove(description);
     }
 
-    public ListSection(List<String> listElements) {
-        this.descriptionList = listElements;
-    }
-
     @Override
     public String toString() {
         StringBuilder builder = new StringBuilder();

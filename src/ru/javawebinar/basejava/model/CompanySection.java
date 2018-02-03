@@ -22,10 +22,6 @@ public class CompanySection extends Section {
         this.companiesList.remove(company);
     }
 
-    public CompanySection(List<Company> companiesList) {
-        this.companiesList = companiesList;
-    }
-
     @Override
     public String toString() {
         StringBuilder builder = new StringBuilder();
