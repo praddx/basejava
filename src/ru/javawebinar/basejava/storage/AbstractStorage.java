@@ -29,6 +29,10 @@ public abstract class AbstractStorage<SK> implements Storage {
 
     protected abstract Resume doGet(SK searchKey);
 
+    public abstract List<Resume> doCopyAll();
+
+    public abstract int size();
+
     public void save(Resume r) {
         LOG.info("Update " + r);
         SK searchKey = getNotExistedSearchKey(r.getUuid());
@@ -59,10 +63,6 @@ public abstract class AbstractStorage<SK> implements Storage {
         Collections.sort(copyAll);
         return copyAll;
     }
-
-    public abstract List<Resume> doCopyAll();
-
-    public abstract int size();
 
     private SK getExistedSearchKey(String uuid) {
         SK searchKey = getSearchKey(uuid);

@@ -1,6 +1,7 @@
 package ru.javawebinar.basejava.model;
 
 import java.util.List;
+import java.util.Objects;
 
 public class ListSection extends Section {
 
@@ -11,15 +12,22 @@ public class ListSection extends Section {
     }
 
     public void setDescriptionList(List<String> descriptionList) {
+        Objects.requireNonNull(descriptionList, "description must not be null");
         this.descriptionList = descriptionList;
     }
 
-    public void addDescription(String description) {
-        this.descriptionList.add(description);
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        ListSection that = (ListSection) o;
+        return Objects.equals(descriptionList, that.descriptionList);
     }
 
-    public void deleteDescription(String description) {
-        this.descriptionList.remove(description);
+    @Override
+    public int hashCode() {
+
+        return Objects.hash(descriptionList);
     }
 
     @Override
