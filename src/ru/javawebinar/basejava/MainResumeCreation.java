@@ -1,8 +1,10 @@
 package ru.javawebinar.basejava;
 
 import ru.javawebinar.basejava.model.*;
+import ru.javawebinar.basejava.util.DateUtil;
 
 import java.time.LocalDate;
+import java.time.Month;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -36,22 +38,22 @@ public class MainResumeCreation {
         resume.getInformationSections().put(SectionType.QUALIFICATIONS, qualification);
 
         // creating companies for resume
-        List<Company> companies = new ArrayList<>();
+        /*List<Organization> companies = new ArrayList<>();
         CompanySection companiesSection = new CompanySection();
 
         String companyName = "League of Justice";
         String position = "Superhero";
         String description = "blablabla";
-        LocalDate startDate = LocalDate.of(2015, 2, 15);
+        LocalDate startDate = DateUtil.of(2015, Month.JANUARY);
         LocalDate endDate = LocalDate.now();
-        Company league = new Company(companyName, position, startDate, endDate, description);
+        Organization league = new Organization(companyName, position, startDate, endDate, description);
 
         companyName = "Mordor";
         position = "Saruman";
         description = "Evil wizard";
-        startDate = LocalDate.of(2013, 6, 20);
-        endDate = LocalDate.of(2015, 2, 8);
-        Company mordor = new Company(companyName, position, startDate, endDate, description);
+        startDate = DateUtil.of(2013, Month.APRIL);
+        endDate = DateUtil.of(2015, Month.JANUARY);
+        Organization mordor = new Organization(companyName, position, startDate, endDate, description);
 
         companies.add(league);
         companies.add(mordor);
@@ -74,5 +76,6 @@ public class MainResumeCreation {
                     System.out.println(c.getKey().getTitle());
                     System.out.println(c.getValue().toString());
                 });
+    }*/
     }
 }
