@@ -24,9 +24,9 @@ public abstract class AbstractFileStorage extends AbstractStorage<File> {
         this.directory = directory;
     }
 
-    public abstract void doWrite(Resume r, OutputStream file) throws IOException;
+    public abstract void doWrite(Resume r, OutputStream os) throws IOException;
 
-    public abstract Resume doRead(InputStream file) throws IOException;
+    public abstract Resume doRead(InputStream is) throws IOException;
 
     @Override
     public void clear() {

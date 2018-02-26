@@ -20,13 +20,13 @@ public abstract class AbstractStorageTest {
 
     protected Storage storage;
 
-    protected static final File STORAGE_DIR = new File("/home/pradd/Java/basejava/src/ru/javawebinar/basejava/storage_files");
+    protected static final File STORAGE_DIR = new File("/home/pradd/Java/basejava/storage");
 
     private static final String UUID_1 = "uuid1";
     private static final String UUID_2 = "uuid2";
     private static final String UUID_3 = "uuid3";
     private static final String UUID_4 = "uuid4";
-    private static final String fullName_1 = "Bob Marley";
+    private static final String ullName_1 = "Bob Marley";
     private static final String fullName_2 = "Marylin Manson";
     private static final String fullName_3 = "Elvis Presley";
     private static final String fullName_4 = "John Lennon";
