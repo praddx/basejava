@@ -2,10 +2,7 @@ package ru.javawebinar.basejava.storage;
 
 import ru.javawebinar.basejava.model.Resume;
 
-import java.io.File;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.OutputStream;
+import java.io.*;
 
 public class ObjectStreamStorage extends AbstractFileStorage {
 
@@ -14,12 +11,14 @@ public class ObjectStreamStorage extends AbstractFileStorage {
     }
 
     @Override
-    public void doWrite(Resume r, OutputStream file) throws IOException {
+    public void doWrite(Resume r, OutputStream os) throws IOException {
+        try (ObjectOutputStream oos = new ObjectOutputStream(os)) {
 
+        }
     }
 
     @Override
-    public Resume doRead(InputStream file) throws IOException {
+    public Resume doRead(InputStream is) throws IOException {
         return null;
     }
 }

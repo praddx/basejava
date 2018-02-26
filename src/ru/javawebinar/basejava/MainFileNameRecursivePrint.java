@@ -16,14 +16,8 @@ public class MainFileNameRecursivePrint {
         if (path.isFile()) {
             System.out.println(path.getName());
         } else {
-            Arrays.stream(Objects.requireNonNull(path.list()))
-                    .forEach(f -> {
-                        try {
-                            printFileName(new File(path.getCanonicalPath() + "/" + f));
-                        } catch (IOException e) {
-                            throw new RuntimeException("error!", e);
-                        }
-                    });
+            Arrays.stream(Objects.requireNonNull(path.listFiles()))
+                    .forEach(f -> printFileName(f));
         }
 
     }

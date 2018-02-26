@@ -6,6 +6,8 @@ import java.util.Objects;
 
 public class Employment implements Serializable {
 
+    private static final long serialVersionUID = 1L;
+
     private String description;
     private String position;
     private LocalDate startDate;

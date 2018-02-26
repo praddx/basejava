@@ -8,6 +8,8 @@ import java.util.*;
  */
 public class Resume implements Comparable<Resume>, Serializable {
 
+    private static final long serialVersionUID = 1L;
+
     // Unique identifier
     private final String uuid;
 

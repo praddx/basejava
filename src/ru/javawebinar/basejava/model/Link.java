@@ -5,44 +5,46 @@ import java.util.Objects;
 
 public class Link implements Serializable {
 
-        private final String name;
-        private final String url;
+    private static final long serialVersionUID = 1L;
 
-        public Link(String name, String url) {
-            Objects.requireNonNull(name, "name must not be null");
-            this.name = name;
-            this.url = url;
-        }
+    private final String name;
+    private final String url;
 
-        public String getName() {
-            return name;
-        }
+    public Link(String name, String url) {
+        Objects.requireNonNull(name, "name must not be null");
+        this.name = name;
+        this.url = url;
+    }
 
-        public String getUrl() {
-            return url;
-        }
+    public String getName() {
+        return name;
+    }
 
-        @Override
-        public String toString() {
-            return "Link(" + name + ',' + url + ')';
-        }
+    public String getUrl() {
+        return url;
+    }
 
-        @Override
-        public boolean equals(Object o) {
-            if (this == o) return true;
-            if (o == null || getClass() != o.getClass()) return false;
+    @Override
+    public String toString() {
+        return "Link(" + name + ',' + url + ')';
+    }
 
-            Link link = (Link) o;
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
 
-            if (!name.equals(link.name)) return false;
-            return url != null ? url.equals(link.url) : link.url == null;
+        Link link = (Link) o;
 
-        }
+        if (!name.equals(link.name)) return false;
+        return url != null ? url.equals(link.url) : link.url == null;
 
-        @Override
-        public int hashCode() {
-            int result = name.hashCode();
-            result = 31 * result + (url != null ? url.hashCode() : 0);
-            return result;
-        }
+    }
+
+    @Override
+    public int hashCode() {
+        int result = name.hashCode();
+        result = 31 * result + (url != null ? url.hashCode() : 0);
+        return result;
+    }
 }
