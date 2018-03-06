@@ -20,6 +20,7 @@ public abstract class AbstractStorageTest {
 
     protected Storage storage;
 
+    protected static final String PAHT_STORAGE_DIR = "/home/pradd/Java/basejava/path_storage";
     protected static final File STORAGE_DIR = new File("/home/pradd/Java/basejava/storage");
 
     private static final String UUID_1 = "uuid1";

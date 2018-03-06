@@ -4,13 +4,10 @@ import ru.javawebinar.basejava.exception.StorageException;
 import ru.javawebinar.basejava.model.Resume;
 
 import java.io.*;
-import java.nio.Path.Paths;
-import java.nio.Path.Path;
-import java.nio.Path.Paths;
+
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
 import java.util.stream.Collectors;
@@ -42,61 +39,74 @@ public abstract class AbstractPathStorage extends AbstractStorage<Path> {
 
     @Override
     protected Path getSearchKey(String uuid) {
-        return new Path(directory, uuid);
+        return Paths.get(directory.toString(), uuid);
     }
 
     @Override
-    protected boolean isExist(Path Path) {
-        return Path.exists();
+    protected boolean isExist(Path path) {
+        return Files.exists(path);
     }
 
     @Override
-    protected void doSave(Path Path, Resume r) {
+    protected void doSave(Path path, Resume r) {
         try {
-            Path.createNewPath();
-            doWrite(r, new BufferedOutputStream(new PathOutputStream(Path)));
+            doWrite(r, Files.newOutputStream(path));
         } catch (IOException e) {
-            throw new StorageException("IO error", Path.getName(), e);
+            throw new StorageException("IO error", path.getFileName().toString(), e);
         }
     }
 
     @Override
-    protected void doUpdate(Path Path, Resume r) {
+    protected void doUpdate(Path path, Resume r) {
         try {
-            doWrite(r, new BufferedOutputStream(new PathOutputStream(Path)));
+            doWrite(r, Files.newOutputStream(path));
         } catch (IOException e) {
-            throw new StorageException("IO error", Path.getName(), e);
+            throw new StorageException("IO error", path.getFileName().toString(), e);
         }
     }
 
     @Override
-    protected void doDelete(Path Path) {
-        Path.delete();
+    protected void doDelete(Path path) {
+        try {
+            Files.delete(path);
+        } catch (IOException e) {
+            throw new StorageException("IO error", path.getFileName().toString(), e);
+        }
     }
 
     @Override
-    protected Resume doGet(Path Path) {
+    protected Resume doGet(Path path) {
         try {
-            return doRead(new BufferedInputStream(new PathInputStream(Path)));
+            return doRead(Files.newInputStream(path));
         } catch (IOException e) {
-            throw new StorageException("IO error", Path.getName(), e);
+            throw new StorageException("IO error", path.getFileName().toString(), e);
         }
     }
 
     @Override
     public List<Resume> doCopyAll() {
-        return Arrays.stream(Objects.requireNonNull(directory.listPaths()))
-                .map(f -> {
-                    try {
-                        return doRead(new BufferedInputStream(new PathInputStream(f)));
-                    } catch (IOException e) {
-                        throw new StorageException("IO error", f.getName(), e);
-                    }
-                }).collect(Collectors.toList());
+        try {
+            return Files.list(directory)
+                    .map(f -> {
+                        try {
+                            return doRead(Files.newInputStream(f));
+                        } catch (IOException e) {
+                            throw new StorageException("IO error", f.getFileName().toString(), e);
+                        }
+                    }).collect(Collectors.toList());
+        } catch (IOException e) {
+            throw new StorageException("IO error", directory.getFileName().toString(), e);
+        }
     }
 
     @Override
     public int size() {
-        return directory.list().length;
+        int size = 0;
+        try {
+            size = (int) Files.list(directory).count();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return size;
     }
 }
