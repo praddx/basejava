@@ -12,21 +12,20 @@ import java.util.List;
 import java.util.Objects;
 import java.util.stream.Collectors;
 
-public abstract class AbstractPathStorage extends AbstractStorage<Path> {
+public class PathStorage extends AbstractStorage<Path> {
     private Path directory;
+    private SerializationStrategy serializationMethod;
 
-    protected AbstractPathStorage(String dir) {
+    protected PathStorage(String dir, SerializationStrategy serializationMethod) {
         directory = Paths.get(dir);
         Objects.requireNonNull(directory, "directory must not be null");
         if (!Files.isDirectory(directory) || !Files.isWritable(directory)) {
             throw new IllegalArgumentException(dir + " is not directory or is not writable");
         }
+        Objects.requireNonNull(serializationMethod, "serializationStrategy not set");
         this.directory = directory;
+        this.serializationMethod = serializationMethod;
     }
-
-    public abstract void doWrite(Resume r, OutputStream os) throws IOException;
-
-    public abstract Resume doRead(InputStream is) throws IOException;
 
     @Override
     public void clear() {
@@ -39,18 +38,19 @@ public abstract class AbstractPathStorage extends AbstractStorage<Path> {
 
     @Override
     protected Path getSearchKey(String uuid) {
-        return Paths.get(directory.toString(), uuid);
+        return directory.resolve(uuid);
     }
 
     @Override
     protected boolean isExist(Path path) {
-        return Files.exists(path);
+        return Files.exists(path) && !Files.isDirectory(path);
     }
 
     @Override
     protected void doSave(Path path, Resume r) {
         try {
-            doWrite(r, Files.newOutputStream(path));
+            Files.createFile(path);
+            serializationMethod.doWrite(r, Files.newOutputStream(path));
         } catch (IOException e) {
             throw new StorageException("IO error", path.getFileName().toString(), e);
         }
@@ -59,7 +59,7 @@ public abstract class AbstractPathStorage extends AbstractStorage<Path> {
     @Override
     protected void doUpdate(Path path, Resume r) {
         try {
-            doWrite(r, Files.newOutputStream(path));
+            serializationMethod.doWrite(r, Files.newOutputStream(path));
         } catch (IOException e) {
             throw new StorageException("IO error", path.getFileName().toString(), e);
         }
@@ -77,7 +77,7 @@ public abstract class AbstractPathStorage extends AbstractStorage<Path> {
     @Override
     protected Resume doGet(Path path) {
         try {
-            return doRead(Files.newInputStream(path));
+            return serializationMethod.doRead(Files.newInputStream(path));
         } catch (IOException e) {
             throw new StorageException("IO error", path.getFileName().toString(), e);
         }
@@ -87,13 +87,7 @@ public abstract class AbstractPathStorage extends AbstractStorage<Path> {
     public List<Resume> doCopyAll() {
         try {
             return Files.list(directory)
-                    .map(f -> {
-                        try {
-                            return doRead(Files.newInputStream(f));
-                        } catch (IOException e) {
-                            throw new StorageException("IO error", f.getFileName().toString(), e);
-                        }
-                    }).collect(Collectors.toList());
+                    .map(f -> doGet(f)).collect(Collectors.toList());
         } catch (IOException e) {
             throw new StorageException("IO error", directory.getFileName().toString(), e);
         }
@@ -105,8 +99,16 @@ public abstract class AbstractPathStorage extends AbstractStorage<Path> {
         try {
             size = (int) Files.list(directory).count();
         } catch (IOException e) {
-            e.printStackTrace();
+            throw new StorageException("IO error", directory.getFileName().toString(), e);
         }
         return size;
+    }
+
+    public SerializationStrategy getSerializationMethod() {
+        return serializationMethod;
+    }
+
+    public void setSerializationMethod(SerializationStrategy serializationMethod) {
+        this.serializationMethod = serializationMethod;
     }
 }
