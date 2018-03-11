@@ -2,6 +2,7 @@ package ru.javawebinar.basejava.storage;
 
 import ru.javawebinar.basejava.exception.StorageException;
 import ru.javawebinar.basejava.model.Resume;
+import ru.javawebinar.basejava.storage.serialization.SerializationStrategy;
 
 import java.io.*;
 
@@ -14,17 +15,17 @@ import java.util.stream.Collectors;
 
 public class PathStorage extends AbstractStorage<Path> {
     private Path directory;
-    private SerializationStrategy serializationMethod;
+    private SerializationStrategy serializer;
 
-    protected PathStorage(String dir, SerializationStrategy serializationMethod) {
-        directory = Paths.get(dir);
-        Objects.requireNonNull(directory, "directory must not be null");
+    protected PathStorage(String dir, SerializationStrategy serializer) {
+        Objects.requireNonNull(dir, "directory must not be null");
+        Path directory = Paths.get(dir);
         if (!Files.isDirectory(directory) || !Files.isWritable(directory)) {
             throw new IllegalArgumentException(dir + " is not directory or is not writable");
         }
-        Objects.requireNonNull(serializationMethod, "serializationStrategy not set");
+        Objects.requireNonNull(serializer, "serializationStrategy not set");
         this.directory = directory;
-        this.serializationMethod = serializationMethod;
+        this.serializer = serializer;
     }
 
     @Override
@@ -50,7 +51,7 @@ public class PathStorage extends AbstractStorage<Path> {
     protected void doSave(Path path, Resume r) {
         try {
             Files.createFile(path);
-            serializationMethod.doWrite(r, Files.newOutputStream(path));
+            serializer.doWrite(r, Files.newOutputStream(path));
         } catch (IOException e) {
             throw new StorageException("IO error", path.getFileName().toString(), e);
         }
@@ -59,7 +60,7 @@ public class PathStorage extends AbstractStorage<Path> {
     @Override
     protected void doUpdate(Path path, Resume r) {
         try {
-            serializationMethod.doWrite(r, Files.newOutputStream(path));
+            serializer.doWrite(r, Files.newOutputStream(path));
         } catch (IOException e) {
             throw new StorageException("IO error", path.getFileName().toString(), e);
         }
@@ -77,7 +78,7 @@ public class PathStorage extends AbstractStorage<Path> {
     @Override
     protected Resume doGet(Path path) {
         try {
-            return serializationMethod.doRead(Files.newInputStream(path));
+            return serializer.doRead(Files.newInputStream(path));
         } catch (IOException e) {
             throw new StorageException("IO error", path.getFileName().toString(), e);
         }
@@ -87,7 +88,7 @@ public class PathStorage extends AbstractStorage<Path> {
     public List<Resume> doCopyAll() {
         try {
             return Files.list(directory)
-                    .map(f -> doGet(f)).collect(Collectors.toList());
+                    .map(this::doGet).collect(Collectors.toList());
         } catch (IOException e) {
             throw new StorageException("IO error", directory.getFileName().toString(), e);
         }
@@ -104,11 +105,11 @@ public class PathStorage extends AbstractStorage<Path> {
         return size;
     }
 
-    public SerializationStrategy getSerializationMethod() {
-        return serializationMethod;
+    public SerializationStrategy getSerializer() {
+        return serializer;
     }
 
-    public void setSerializationMethod(SerializationStrategy serializationMethod) {
-        this.serializationMethod = serializationMethod;
+    public void setSerializer(SerializationStrategy serializer) {
+        this.serializer = serializer;
     }
 }
