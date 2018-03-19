@@ -22,6 +22,9 @@ public abstract class AbstractStorageTest {
 
     protected static final String PAHT_STORAGE_DIR = "/home/pradd/Java/basejava/path_storage";
     protected static final File STORAGE_DIR = new File("/home/pradd/Java/basejava/storage");
+    protected static final String XML_STORAGE_DIR = "/home/pradd/Java/basejava/xml_storage";
+    protected static final String JASON_STORAGE_DIR = "/home/pradd/Java/basejava/json_storage";
+    protected static final String DATA_STORAGE_DIR = "/home/pradd/Java/basejava/data_storage";
 
     private static final String UUID_1 = "uuid1";
     private static final String UUID_2 = "uuid2";
@@ -92,7 +95,9 @@ public abstract class AbstractStorageTest {
 
     @Test
     public void get() throws Exception {
-        assertEquals(r1, storage.get(UUID_1));
+        assertGet(r1);
+        assertGet(r2);
+        assertGet(r3);
     }
 
     @Test(expected = NotExistStorageException.class)
@@ -116,6 +121,10 @@ public abstract class AbstractStorageTest {
     @Test
     public void size() throws Exception {
         assertEquals(3, storage.size());
+    }
+
+    private void assertGet(Resume r) {
+        assertEquals(r, storage.get(r.getUuid()));
     }
 
 }

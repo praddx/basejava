@@ -64,14 +64,14 @@ public class ResumeThree {
         firstOrganizationEmploymentList.add(employmentInFirstOrganization);
         firstOrganizationEmploymentList.add(employmentInFirstOrganization2);
         secondOrganizationEmploymentList.add(employmentInSecondOrganization);
-        organizationFirstOne.setEmployment(firstOrganizationEmploymentList);
-        organizationSecondOne.setEmployment(secondOrganizationEmploymentList);
+        organizationFirstOne.setEmploymentsList(firstOrganizationEmploymentList);
+        organizationSecondOne.setEmploymentsList(secondOrganizationEmploymentList);
         organizations.add(organizationFirstOne);
         organizations.add(organizationSecondOne);
         r3.getInformationSections().put(SectionType.EXPERIENCE, organizationSection);
 
         universitiesEmploymentList.add(study);
-        university.setEmployment(universitiesEmploymentList);
+        university.setEmploymentsList(universitiesEmploymentList);
         universitiesList.add(university);
         r3.getInformationSections().put(SectionType.EDUCATION, educationSection);
     }

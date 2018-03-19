@@ -1,17 +1,29 @@
 package ru.javawebinar.basejava.model;
 
+import ru.javawebinar.basejava.util.LoacaDateAdapter;
+
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
+import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.Objects;
 
+@XmlAccessorType(XmlAccessType.FIELD)
 public class Employment implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
     private String description;
     private String position;
+    @XmlJavaTypeAdapter(LoacaDateAdapter.class)
     private LocalDate startDate;
+    @XmlJavaTypeAdapter(LoacaDateAdapter.class)
     private LocalDate endDate;
+
+    public Employment() {
+
+    }
 
     public Employment(String description, String position, LocalDate startDate, LocalDate endDate) {
         Objects.requireNonNull(description, "description must not be null");
