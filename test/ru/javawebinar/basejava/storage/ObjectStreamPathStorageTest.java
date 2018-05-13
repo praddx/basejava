@@ -8,6 +8,6 @@ import ru.javawebinar.basejava.storage.serialization.ObjectStreamSerializer;
 public class ObjectStreamPathStorageTest extends AbstractStorageTest {
 
     public ObjectStreamPathStorageTest() {
-        super(new PathStorage(PAHT_STORAGE_DIR, new ObjectStreamSerializer()));
+        super(new PathStorage(PATH_STORAGE_DIR, new ObjectStreamSerializer()));
     }
 }
