@@ -27,16 +27,25 @@ public class DataStreamSerializer implements SerializationStrategy {
                 String sectionName = section.getKey().name();
                 dos.writeUTF(sectionName);
 
-                if (sectionName.equals("PERSONAL") || sectionName.equals("OBJECTIVE")) {
-                    dos.writeUTF(((TextSection) section.getValue()).getText());
-                }
-
-                if (sectionName.equals("ACHIEVEMENT") || sectionName.equals("QUALIFICATIONS")) {
-                    writeListSection(dos, ((ListSection) section.getValue()).getDescriptionList());
-                }
-
-                if (sectionName.equals("EXPERIENCE") || sectionName.equals("EDUCATION")) {
-                    writeOrganizationSection(dos, ((OrganizationSection) section.getValue()));
+                switch (sectionName) {
+                    case "PERSONAL":
+                        dos.writeUTF(((TextSection) section.getValue()).getText());
+                        break;
+                    case "OBJECTIVE":
+                        dos.writeUTF(((TextSection) section.getValue()).getText());
+                        break;
+                    case "ACHIEVEMENT":
+                        writeListSection(dos, ((ListSection) section.getValue()).getDescriptionList());
+                        break;
+                    case "QUALIFICATIONS":
+                        writeListSection(dos, ((ListSection) section.getValue()).getDescriptionList());
+                        break;
+                    case "EXPERIENCE":
+                        writeOrganizationSection(dos, ((OrganizationSection) section.getValue()));
+                        break;
+                    case "EDUCATION":
+                        writeOrganizationSection(dos, ((OrganizationSection) section.getValue()));
+                        break;
                 }
             }
 
@@ -60,20 +69,26 @@ public class DataStreamSerializer implements SerializationStrategy {
             int sectionsCount = dis.readInt();
             for (int i = 0; i < sectionsCount; i++) {
                 SectionType sectionType = SectionType.valueOf(dis.readUTF());
-                if (sectionType == SectionType.PERSONAL || sectionType == SectionType.OBJECTIVE) {
-                    resume.getInformationSections().put(sectionType, new TextSection(dis.readUTF()));
-                }
 
-                if (sectionType == SectionType.ACHIEVEMENT || sectionType == SectionType.QUALIFICATIONS) {
-                    ListSection listSection = new ListSection();
-                    listSection.getDescriptionList().addAll(readListSection(dis));
-                    resume.getInformationSections().put(sectionType, listSection);
-                }
-
-                if (sectionType == SectionType.EXPERIENCE || sectionType == SectionType.EDUCATION) {
-                    OrganizationSection organizationSection = new OrganizationSection();
-                    organizationSection.getOrganizationsList().addAll(readOrganizationSection(dis));
-                    resume.getInformationSections().put(sectionType, organizationSection);
+                switch (sectionType) {
+                    case PERSONAL:
+                        resume.getInformationSections().put(sectionType, new TextSection(dis.readUTF()));
+                        break;
+                    case OBJECTIVE:
+                        resume.getInformationSections().put(sectionType, new TextSection(dis.readUTF()));
+                        break;
+                    case ACHIEVEMENT:
+                        resume.getInformationSections().put(sectionType, readListSection(dis));
+                        break;
+                    case QUALIFICATIONS:
+                        resume.getInformationSections().put(sectionType, readListSection(dis));
+                        break;
+                    case EXPERIENCE:
+                        resume.getInformationSections().put(sectionType, readOrganizationSection(dis));
+                        break;
+                    case EDUCATION:
+                        resume.getInformationSections().put(sectionType, readOrganizationSection(dis));
+                        break;
                 }
             }
             return resume;
@@ -82,20 +97,20 @@ public class DataStreamSerializer implements SerializationStrategy {
     }
 
 
-    private static void writeListSection(DataOutputStream dos, List<String> descriptionList) throws IOException {
+    private void writeListSection(DataOutputStream dos, List<String> descriptionList) throws IOException {
         dos.writeInt(descriptionList.size());
         for (int i = 0; i < descriptionList.size(); i++) {
             dos.writeUTF(descriptionList.get(i));
         }
     }
 
-    private static List<String> readListSection(DataInputStream dis) throws IOException {
-        List<String> result = new ArrayList<>();
+    private ListSection readListSection(DataInputStream dis) throws IOException {
+        ListSection listSection = new ListSection();
         int listEntriesCount = dis.readInt();
         for (int i = 0; i < listEntriesCount; i++) {
-            result.add(dis.readUTF());
+            listSection.getDescriptionList().add(dis.readUTF());
         }
-        return result;
+        return listSection;
     }
 
     private void writeOrganizationSection(DataOutputStream dos, OrganizationSection organizationSection) throws IOException {
@@ -129,13 +144,13 @@ public class DataStreamSerializer implements SerializationStrategy {
         dos.writeUTF(employment.getEndDate().format(DateTimeFormatter.ofPattern("dd/MM/yyyy")));
     }
 
-    private List<Organization> readOrganizationSection(DataInputStream dis) throws IOException {
-        List<Organization> organizationsList = new ArrayList<>();
+    private OrganizationSection readOrganizationSection(DataInputStream dis) throws IOException {
+        OrganizationSection result = new OrganizationSection();
         int organizationsCount = dis.readInt();
         for (int i = 0; i < organizationsCount; i++) {
-            organizationsList.add(readOrganization(dis));
+            result.getOrganizationsList().add(readOrganization(dis));
         }
-        return organizationsList;
+        return result;
     }
 
     private Organization readOrganization(DataInputStream dis) throws IOException {

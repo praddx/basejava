@@ -20,7 +20,7 @@ public abstract class AbstractStorageTest {
 
     protected Storage storage;
 
-    protected static final String PAHT_STORAGE_DIR = "/home/pradd/Java/basejava/path_storage";
+    protected static final String PATH_STORAGE_DIR = "/home/pradd/Java/basejava/path_storage";
     protected static final File STORAGE_DIR = new File("/home/pradd/Java/basejava/storage");
     protected static final String XML_STORAGE_DIR = "/home/pradd/Java/basejava/xml_storage";
     protected static final String JASON_STORAGE_DIR = "/home/pradd/Java/basejava/json_storage";
@@ -30,15 +30,15 @@ public abstract class AbstractStorageTest {
     private static final String UUID_2 = "uuid2";
     private static final String UUID_3 = "uuid3";
     private static final String UUID_4 = "uuid4";
-    private static final String ullName_1 = "Bob Marley";
+    private static final String fullName_1 = "Bob Marley";
     private static final String fullName_2 = "Marylin Manson";
     private static final String fullName_3 = "Elvis Presley";
     private static final String fullName_4 = "John Lennon";
 
-    private static final Resume r1 = ResumeOne.getResume();
-    private static final Resume r2 = ResumeTwo.getResume();
-    private static final Resume r3 = ResumeThree.getResume();
-    private static final Resume r4 = ResumeFour.getResume();
+    private static final Resume r1 = TestResume.getResume(UUID_1, fullName_1);
+    private static final Resume r2 = TestResume.getResume(UUID_2, fullName_2);
+    private static final Resume r3 = TestResume.getResume(UUID_3, fullName_3);
+    private static final Resume r4 = TestResume.getResume(UUID_4, fullName_4);
 
     public AbstractStorageTest(Storage storage) {
         this.storage = storage;
