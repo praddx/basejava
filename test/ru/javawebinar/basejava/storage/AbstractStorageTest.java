@@ -3,6 +3,7 @@ package ru.javawebinar.basejava.storage;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
+import ru.javawebinar.basejava.Config;
 import ru.javawebinar.basejava.exception.ExistStorageException;
 import ru.javawebinar.basejava.exception.NotExistStorageException;
 import ru.javawebinar.basejava.model.*;
@@ -20,11 +21,14 @@ public abstract class AbstractStorageTest {
 
     protected Storage storage;
 
-    protected static final String PATH_STORAGE_DIR = "/home/pradd/Java/basejava/path_storage";
-    protected static final File STORAGE_DIR = new File("/home/pradd/Java/basejava/storage");
-    protected static final String XML_STORAGE_DIR = "/home/pradd/Java/basejava/xml_storage";
-    protected static final String JASON_STORAGE_DIR = "/home/pradd/Java/basejava/json_storage";
-    protected static final String DATA_STORAGE_DIR = "/home/pradd/Java/basejava/data_storage";
+   // protected static final String PATH_STORAGE_DIR = "/home/pradd/Java/basejava/path_storage";
+
+    protected static final Config config = Config.getInstance();
+    protected static final File STORAGE_DIR = new File(config.getSTORAGE_DIR());
+
+    //protected static final String XML_STORAGE_DIR = "/home/pradd/Java/basejava/xml_storage";
+    //protected static final String JASON_STORAGE_DIR = "/home/pradd/Java/basejava/json_storage";
+    //protected static final String DATA_STORAGE_DIR = "/home/pradd/Java/basejava/data_storage";
 
     private static final String UUID_1 = "uuid1";
     private static final String UUID_2 = "uuid2";

@@ -12,7 +12,7 @@ public class TestResume {
 
     public static Resume getResume(String uuid, String fullName) {
         Resume resume = new Resume(uuid, fullName);
-        populateResume(resume);
+       // populateResume(resume);
         return resume;
     }
 
