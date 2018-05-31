@@ -1,6 +1,6 @@
 package ru.javawebinar.basejava.exception;
 
-import java.io.IOException; /**
+/**
  * Created by Pradd on 25.12.2017.
  */
 public class StorageException extends RuntimeException {

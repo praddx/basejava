@@ -6,7 +6,7 @@ import org.junit.Test;
 import ru.javawebinar.basejava.Config;
 import ru.javawebinar.basejava.exception.ExistStorageException;
 import ru.javawebinar.basejava.exception.NotExistStorageException;
-import ru.javawebinar.basejava.model.*;
+import ru.javawebinar.basejava.model.Resume;
 
 import java.io.File;
 import java.util.Arrays;
@@ -21,11 +21,9 @@ public abstract class AbstractStorageTest {
 
     protected Storage storage;
 
-   // protected static final String PATH_STORAGE_DIR = "/home/pradd/Java/basejava/path_storage";
-
-    protected static final Config config = Config.getInstance();
-    protected static final File STORAGE_DIR = new File(config.getSTORAGE_DIR());
-
+    //protected static final String PATH_STORAGE_DIR = "/home/pradd/Java/basejava/path_storage";
+    protected static Config config = Config.getInstance();
+    protected static final File STORAGE_DIR = config.getStorageDir();
     //protected static final String XML_STORAGE_DIR = "/home/pradd/Java/basejava/xml_storage";
     //protected static final String JASON_STORAGE_DIR = "/home/pradd/Java/basejava/json_storage";
     //protected static final String DATA_STORAGE_DIR = "/home/pradd/Java/basejava/data_storage";

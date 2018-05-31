@@ -1,44 +1,39 @@
 package ru.javawebinar.basejava;
 
-import ru.javawebinar.basejava.exception.StorageException;
-
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.Properties;
 
-/**
- * Created by Yana on 5/24/2018.
- */
 public class Config {
+    protected static final File PROPS = new File("config/resumes.properties");
 
-    private static Config instance;
-
-    private final String STORAGE_DIR;
-    private final String dbUrl;
-    private final String dbUser;
-    private final String dbPassword;
-
-    private Config() {
-        try (InputStream is = new FileInputStream(new File(".\\config\\config.properties"))) {
-            Properties projectProperties = new Properties();
-            projectProperties.load(is);
-            this.STORAGE_DIR = projectProperties.getProperty("storage.dir");
-            this.dbUrl = projectProperties.getProperty("db.url");
-            this.dbUser = projectProperties.getProperty("db.user");
-            this.dbPassword = projectProperties.getProperty("db.password");
-        } catch (IOException e) {
-            throw new StorageException("Failed to initialize properties!", "");
-        }
-
-    }
+    private static final Config INSTANCE = new Config();
+    private Properties props = new Properties();
+    private String dbUrl;
+    private String dbUser;
+    private String dbPassword;
+    private File storageDir;
 
     public static Config getInstance() {
-        if (instance == null) {
-            instance = new Config();
+        return INSTANCE;
+    }
+
+    private Config() {
+        try(InputStream is = new FileInputStream(PROPS)) {
+            props.load(is);
+            storageDir = new File(props.getProperty("storage.dir"));
+            dbUrl = props.getProperty("db.url");
+            dbUser = props.getProperty("db.user");
+            dbPassword = props.getProperty("db.password");
+        } catch (IOException e) {
+           throw new IllegalStateException("Invalid config file " + PROPS.getAbsolutePath());
         }
-        return instance;
+    }
+
+    public File getStorageDir() {
+        return storageDir;
     }
 
     public String getDbUrl() {
@@ -51,9 +46,5 @@ public class Config {
 
     public String getDbPassword() {
         return dbPassword;
-    }
-
-    public String getSTORAGE_DIR() {
-        return STORAGE_DIR;
     }
 }
